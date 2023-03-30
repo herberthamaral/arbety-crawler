@@ -42,6 +42,10 @@ def formula(probability_of_win: float = 18.0/37, proportion_of_win: float = 2.0)
 
 
 def calc_bets_based_on_db_slice(db_slice):
+    """
+    Calcula a proporção de investimento de capital em cada cor baseado no
+    histórico do banco
+    """
     black = sum([1 for c in db_slice if c == "black"])
     red = sum([1 for c in db_slice if c == "red"])
     white = sum([1 for c in db_slice if c == "white"])
@@ -49,10 +53,17 @@ def calc_bets_based_on_db_slice(db_slice):
     invest_black = formula(p_black)
     invest_red = formula(p_red)
     invest_white = formula(p_white, 20)
+    if invest_black < 0 and invest_red < 0:
+        invest_white += (invest_black * -1)
+        invest_white += (invest_red * -1)
+        invest_black = 0
+        invest_red = 0
     if invest_black < 0:
         invest_red += (invest_black * -1)
+        invest_black = 0
     if invest_red < 0:
         invest_black += (invest_white * -1)
+        invest_red = 0
     if invest_white < 0:
         invest_white = 0
     return invest_black, invest_red, invest_white
@@ -60,7 +71,7 @@ def calc_bets_based_on_db_slice(db_slice):
 
 def simulate_based_on_db(db):
     slice_start = 0
-    slice_finish = 36
+    slice_finish = 37
     money = 100.0
     len_db = len(db)
     wins = 0
@@ -84,15 +95,16 @@ def simulate_based_on_db(db):
         money += gain
         money -= loss
         print(gain > loss, gain, loss, money)
+        print(" -> actual roll: ", actual_roll , " | black:", bb * money_to_bet, "red: ", br * money_to_bet, "white: ", bw * money_to_bet)
         wins += int(gain > loss)
         total_wins += int(gain > loss)
         if slice_start % 30 == 0:
-            input(f'wins: {wins}/30 (total: {total_wins}/{total_bets}):')
+            print(f'wins: {wins}/30 (total: {total_wins}/{total_bets}):')
             wins = 0
         slice_start += 1
         slice_finish += 1
         total_bets += 1
-    return money
+    return money, total_wins, total_bets, float(total_wins)/total_bets
 
 def main():
     db = read_db()
