@@ -9,6 +9,7 @@ packages = [{include = "arbety_crawler"}]
 [tool.poetry.dependencies]
 python = "^3.11"
 mitmproxy = "^9.0.1"
+redis = "^4.5.4"
 
 
 [build-system]

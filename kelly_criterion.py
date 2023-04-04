@@ -99,7 +99,7 @@ def simulate_based_on_db(db):
         wins += int(gain > loss)
         total_wins += int(gain > loss)
         if slice_start % 30 == 0:
-            print(f'wins: {wins}/30 (total: {total_wins}/{total_bets}):')
+            print(f"wins: {wins}/30 (total: {total_wins}/{total_bets}):")
             wins = 0
         slice_start += 1
         slice_finish += 1
