@@ -93,6 +93,6 @@ class WebSocketDataCapture:
 
     def _notify_new_entry(self, id, started_at, color, roll) -> None:
         new_entry = (id, started_at, color, roll)
-        self.redis.lpush("arbety.bets", json.dumps(new_entry))
+        self.redis.rpush("arbety.bets", json.dumps(new_entry))
 
 addons = [WebSocketDataCapture()]
