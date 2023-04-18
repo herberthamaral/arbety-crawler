@@ -34,7 +34,7 @@ while money > 10:
     if actual_roll == "white":
         gain = 0  # Não apostamos em brancas (ainda)
         loss = int(bb * money_to_bet) + int(br * money_to_bet)
-    money += gain
+    money += (gain / 2)
     money -= loss
     print("Ganhamos ", gain, ". Perdemos ", loss, ". Saldo: ", money)
     db_slice.append(bet[2])
