@@ -33,7 +33,7 @@ while money > 10:
         loss = int(bb * money_to_bet) + int(bw * money_to_bet)
     if actual_roll == "white":
         gain = 0  # Não apostamos em brancas (ainda)
-        loss = int(bb * money) + int(br * money)
+        loss = int(bb * money_to_bet) + int(br * money_to_bet)
     money += gain
     money -= loss
     print("Ganhamos ", gain, ". Perdemos ", loss, ". Saldo: ", money)
