@@ -84,13 +84,13 @@ def simulate_based_on_db(db):
         gain, loss = 0, 0
         money_to_bet = min(money, 100)
         if actual_roll == "black":
-            gain = bb * money_to_bet * 2
+            gain = bb * money_to_bet
             loss = br * money_to_bet + bw * money_to_bet
         if actual_roll == "red":
-            gain = br * money_to_bet * 2
+            gain = br * money_to_bet
             loss = bb * money_to_bet + bw * money_to_bet
         if actual_roll == "white":
-            gain = bw * money_to_bet * 20
+            gain = bw * money_to_bet * 19
             loss = bb * money_to_bet + br * money_to_bet
         money += gain
         money -= loss
@@ -104,7 +104,7 @@ def simulate_based_on_db(db):
         slice_start += 1
         slice_finish += 1
         total_bets += 1
-    return money, total_wins, total_bets, float(total_wins)/total_bets
+    return money, total_wins, total_bets, (float(total_wins)/total_bets if total_bets > 0 else 0)
 
 def main():
     db = read_db()
