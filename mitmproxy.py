@@ -1,4 +1,3 @@
-from mitmproxy import http
 import redis
 import datetime
 import logging
